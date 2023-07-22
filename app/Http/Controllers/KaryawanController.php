@@ -14,12 +14,12 @@ class KaryawanController extends Controller
      */
     public function index()
     {
-        $karyawans = Karyawan::all();
+        $karyawans = Karyawan::limit(3)->get();
         $response = [
             'meta' => [
                 'status' => 'success',
                 'code' => 200,
-                'message' => 'Data Karyawan obtained',
+                'message' => 'Data Karyawan Obtained',
             ],
             'data' => $karyawans,
         ];
@@ -50,7 +50,7 @@ class KaryawanController extends Controller
             'meta' => [
                 'status' => 'success',
                 'code' => 200,
-                'message' => 'Data Karyawan added',
+                'message' => 'Data Karyawan Added',
             ],
             'data' => $karyawan,
         ];
@@ -69,7 +69,7 @@ class KaryawanController extends Controller
             'meta' => [
                 'status' => 'success',
                 'code' => 200,
-                'message' => 'Data Karyawan founded',
+                'message' => 'Data Karyawan Has Found',
             ],
             'data' => $karyawan,
         ];
@@ -82,7 +82,27 @@ class KaryawanController extends Controller
      */
     public function update(UpdateKaryawanRequest $request, Karyawan $karyawan)
     {
-        //
+        $request->validated();
+
+        $data = [
+            'nama' => $request->nama,
+            'alamat' => $request->alamat,
+            'tanggal_lahir' => $request->tanggal_lahir,
+            'tanggal_bergabung' => $request->tanggal_bergabung,
+        ];
+
+        $karyawan->update($data);
+
+        $response = [
+            'meta' => [
+                'status' => 'success',
+                'code' => 200,
+                'message' => 'Data Karyawan Has Updated',
+            ],
+            'data' => $karyawan,
+        ];
+
+        return response()->json($response, Response::HTTP_OK);
     }
 
     /**
@@ -90,6 +110,16 @@ class KaryawanController extends Controller
      */
     public function destroy(Karyawan $karyawan)
     {
-        //
+        $karyawan->delete();
+
+        $response = [
+            'meta' => [
+                'status' => 'success',
+                'code' => 200,
+                'message' => 'Data Karyawan Deleted',
+            ],
+        ];
+
+        return response()->json($response, Response::HTTP_OK);
     }
 }
