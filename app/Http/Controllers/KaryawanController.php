@@ -15,6 +15,7 @@ class KaryawanController extends Controller
     public function index()
     {
         $karyawans = Karyawan::limit(3)->get();
+
         $response = [
             'meta' => [
                 'status' => 'success',

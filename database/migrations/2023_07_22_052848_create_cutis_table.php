@@ -13,8 +13,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cutis', function (Blueprint $table) {
+            $table->id();
 
-            $table->string('nomor_induk')->primary();
+            $table->string('nomor_induk');
             $table->foreign('nomor_induk')->references('nomor_induk')->on('karyawans');
             $table->date('tanggal_cuti');
             $table->integer('lama_cuti');

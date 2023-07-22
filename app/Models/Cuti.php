@@ -9,9 +9,6 @@ class Cuti extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'nomor_induk';
-    public $incrementing = false;
-
     protected $fillable = [
         'nomor_induk',
         'tanggal_cuti',

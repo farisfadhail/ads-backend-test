@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StoreCutiRequest extends FormRequest
 {
@@ -11,7 +13,7 @@ class StoreCutiRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +24,29 @@ class StoreCutiRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'nomor_induk' => 'required',
+            'tanggal_cuti' => 'required|date',
+            'lama_cuti' => 'required|integer',
+            'keterangan' => 'required|string|max:255'
+        ];
+    }
+
+    public function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'status' => 'failed',
+            'message' => 'Validation errors',
+            'data' => $validator->errors()
+        ]));
+    }
+
+    public function messages()
+    {
+        return [
+            'nomor_induk.required' => 'Nomor induk is required!',
+            'tanggal_cuti.required' => 'Tanggal cuti is required!',
+            'lama_cuti.required' => 'Lama cuti is required!',
+            'keterangan.required' => 'Keterangan is required!',
         ];
     }
 }
