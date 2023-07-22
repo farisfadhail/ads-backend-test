@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('karyawans', function (Blueprint $table) {
             $table->id();
 
-            $table->string('nomor_induk')->unique();
+            $table->string('nomor_induk')->unique()->default(0);
             $table->string('nama');
             $table->longText('alamat');
             $table->date('tanggal_lahir');

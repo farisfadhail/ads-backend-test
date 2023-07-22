@@ -34,10 +34,16 @@ class KaryawanController extends Controller
     {
         $request->validated();
 
-        $newKaryawan = Karyawan::create($request);
+        $data = [
+            "nama" => $request->nama,
+            "alamat" => $request->alamat,
+            "tanggal_lahir" => $request->tanggal_lahir,
+            "tanggal_bergabung" => $request->tanggal_bergabung,
+        ];
 
-        $karyawan = new Karyawan();
-        $karyawan->nomor_induk = 'IP06'.str_pad($newKaryawan->id, 3, "0", STR_PAD_LEFT);
+        $karyawan = Karyawan::create($data);
+
+        $karyawan->nomor_induk = 'IP06'.str_pad($karyawan->id, 3, "0", STR_PAD_LEFT);
         $karyawan->save();
 
         $response = [
@@ -57,15 +63,18 @@ class KaryawanController extends Controller
      */
     public function show(Karyawan $karyawan)
     {
-        //
-    }
+        $karyawan = Karyawan::find($karyawan->id);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Karyawan $karyawan)
-    {
-        //
+        $response = [
+            'meta' => [
+                'status' => 'success',
+                'code' => 200,
+                'message' => 'Data Karyawan founded',
+            ],
+            'data' => $karyawan,
+        ];
+
+        return response()->json($response, Response::HTTP_OK);
     }
 
     /**
