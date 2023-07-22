@@ -27,8 +27,8 @@ class CutiController extends Controller
             $data = [
                 'nomor_induk' => $cuti->nomor_induk,
                 'nama' => $karyawan[0]->nama,
-                'lama_cuti' => 12 - $cuti->total_cuti,
-                'tahun' => $cuti->year
+                'sisa_cuti' => 12 - $cuti->total_cuti,
+                //'tahun' => $cuti->year
             ];
 
             array_push($datas, $data);
